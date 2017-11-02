@@ -6,15 +6,17 @@ import android.util.Log;
 
 import com.vicpinm.autosubscription.anotations.AutoSubscription;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends AppCompatActivity {
 
-    @AutoSubscription Subscription s1;
-    @AutoSubscription Subscription s2;
-    @AutoSubscription Subscription s3;
+    @AutoSubscription Disposable s1;
+    @AutoSubscription Disposable s2;
+    @AutoSubscription Disposable s3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,20 +27,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createSubscriptions(){
-        s1 = Observable.create(new Observable.OnSubscribe<String>() {
-            @Override public void call(Subscriber<? super String> subscriber) {
+        s1 = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
                 Log.d("Sample","Subscription s1 created");
             }
+
         }).subscribe();
 
-        s2 = Observable.create(new Observable.OnSubscribe<String>() {
-            @Override public void call(Subscriber<? super String> subscriber) {
+        s2 = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
                 Log.d("Sample","Subscription s2 created");
             }
         }).subscribe();
 
-        s3 = Observable.create(new Observable.OnSubscribe<String>() {
-            @Override public void call(Subscriber<? super String> subscriber) {
+        s3 = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
                 Log.d("Sample","Subscription s3 created");
             }
         }).subscribe();

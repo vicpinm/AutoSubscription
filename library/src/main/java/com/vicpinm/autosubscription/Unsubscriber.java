@@ -10,10 +10,10 @@ import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
- * Created by Oesia on 10/10/2016.
+ * Created by Victor on 10/10/2016.
  */
 
 public class Unsubscriber {
@@ -56,8 +56,8 @@ public class Unsubscriber {
                 boolean accesibility = f.isAccessible();
                 f.setAccessible(true);
                 Object o = f.get(instance);
-                if(o instanceof Subscription){
-                    ((Subscription)o).unsubscribe();
+                if(o instanceof Disposable){
+                    ((Disposable)o).dispose();
                 }
                 else if(o instanceof UnsubscribeListener){
                     ((UnsubscribeListener)o).onUnsubscribe();
